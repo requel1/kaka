@@ -11,7 +11,7 @@ func SelectRows(ctx context.Context, conn *pgx.Conn) error {
 	sqlQuery := `
 	SELECT *
 	FROM pets
-	GROUP BY id asc;
+	ORDER BY id asc;
 	`
 	rows, err := conn.Query(ctx, sqlQuery)
 	if err != nil {
