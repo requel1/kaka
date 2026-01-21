@@ -3,7 +3,6 @@ package simple_connection
 import (
 	"context"
 
-	"github.com/jackc/pgx"
 	"github.com/jackc/pgx/v5"
 )
 
