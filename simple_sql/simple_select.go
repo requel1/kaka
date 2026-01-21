@@ -9,16 +9,14 @@ import (
 
 func SelectRows(ctx context.Context, conn *pgx.Conn) error {
 	sqlQuery := `
-	SELECT id,name,age
+	SELECT *
 	FROM pets
-	ORDER BY id asc;
+	GROUP BY id asc;
 	`
 	rows, err := conn.Query(ctx, sqlQuery)
-
 	if err != nil {
 		return err
 	}
-
 	defer rows.Close()
 
 	for rows.Next() {
@@ -26,28 +24,19 @@ func SelectRows(ctx context.Context, conn *pgx.Conn) error {
 		var name string
 		var age int
 
-		err := rows.Scan(
-			&id,
-			&name,
-			&age,
-		)
+		err := rows.Scan(&id, &name, &age)
 		if err != nil {
 			return err
 		}
+		PrintRows(id, name, age)
 
-		PrintTask(id, name, age)
 	}
 	return nil
-
 }
 
-func PrintTask(
-	id int,
-	name string,
-	age int,
-) {
-	fmt.Println("---------------------------------")
-	fmt.Println("id:", id)
-	fmt.Println("name:", name)
-	fmt.Println("age:", age)
+func PrintRows(id int, name string, age int) {
+	fmt.Println("-------------------------------------")
+	fmt.Println("Id: ", id)
+	fmt.Println("Name: ", name)
+	fmt.Println("Age: ", age)
 }
